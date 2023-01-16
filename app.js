@@ -21,13 +21,21 @@ mongoose.connect(
   }
 );
 
+const cors = require("cors");
+const corsOptions = {
+  origin: "*",
+  credentials: true, //access-control-allow-credentials:true
+  optionSuccessStatus: 200,
+};
+
 const app = express();
 
+app.use(cors(corsOptions));
 app.use(logger("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
-
+// TODO : add middleware to differentiate open and closed routes and authentication for closed routes
 app.use("/users", usersRouter);
 app.use("/recipes", recipesRouter);
 
